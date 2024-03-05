@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 export default function RegisterScreen() {
     return (
     <View style={styles.container}>
-    <Text style={styles.text}>RegisterScreen</Text>
+    <Text style={styles.text}>Mohan is great thalaiva engala aasirvadham panunngaaaaa</Text>
     </View>
     )
 }
