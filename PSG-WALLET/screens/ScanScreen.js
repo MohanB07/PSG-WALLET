@@ -2,8 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import { Camera } from 'expo-camera';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import * as Font from 'expo-font';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function ScanScreen() {
+
+  
   const navigation = useNavigation();
 
   const [hasPermission, setHasPermission] = useState(null);
@@ -15,6 +19,11 @@ export default function ScanScreen() {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
+    Font.loadAsync({
+      'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      // Add more fonts as needed
+    });
   }, []);
 
   const handleBarCodeScanned = ({ data }) => {
@@ -56,7 +65,7 @@ export default function ScanScreen() {
         <View style={styles.scannedDataContainer}>
           <Text style={styles.scannedDataText}>ID: {scannedData}</Text>
           <TouchableOpacity style={styles.actionButton} onPress={() => { navigation.navigate("register")}}>
-            <Text style={styles.buttonText}>Action</Text>
+            <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
           </TouchableOpacity>
         </View>
       )}
@@ -65,6 +74,7 @@ export default function ScanScreen() {
 }
 
 const styles = StyleSheet.create({
+  
   logo:{
     width: 100,
     height: 100,
@@ -79,11 +89,12 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 35,
-    fontWeight: "bold",
+    fontFamily: 'Poppins-Light',
     marginBottom: 20,
     color: "#E9E8E8",
   },
   scanIdText: {
+    fontFamily: 'Poppins-Light',
     fontSize: 25,
     color: "#E9E8E8",
     marginBottom: 10,
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
   },
   scannedDataText: {
     fontSize: 22,
-    fontWeight: "600",
+    fontFamily: 'Poppins-Light',
     textAlign: "center",
     color: "#E9E8E8",
     marginBottom: 5,
@@ -128,7 +139,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: 'Poppins-Bold',
     color: "#424874",
     textAlign: "center",
   },
