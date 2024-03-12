@@ -3,6 +3,8 @@
 # dependencies
 node_modules/
 
+PSG-WALLET/server/.env
+
 # Expo
 .expo/
 dist/
