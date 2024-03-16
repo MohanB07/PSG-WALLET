@@ -1,7 +1,12 @@
 const express = require('express')
-const Router = express.Router()
-const registerControl = require('../controllers/registerControls')
-const loginControl = require('../controllers/loginControl')
+const {createUser, login} = require('../controllers/registerControls')
+const {validateStudent} = require('../controllers/validateUser')
+
+const Router = express.Router();
 
 
-Router.post('/',registerControl.createUser)
+Router.post('/create', createUser)
+      .get('/login', login)
+      .get('/validateStudent', validateStudent)
+
+module.exports = Router

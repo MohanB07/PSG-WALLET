@@ -1,13 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { Camera } from 'expo-camera';
+import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import * as Font from 'expo-font';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useGlobalContext } from '../context/globalContext';
+
 
 export default function ScanScreen() {
 
-  
+  const {validateStudent, error} = useGlobalContext();
+
   const navigation = useNavigation();
 
   const [hasPermission, setHasPermission] = useState(null);
@@ -24,8 +27,9 @@ export default function ScanScreen() {
       'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
       // Add more fonts as needed
     });
-  }, []);
 
+  }, []);
+  
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
     setScannedData(data);
@@ -35,6 +39,63 @@ export default function ScanScreen() {
     setScanned(false);
     setScannedData(null);
   };
+
+  // const studentOrStaff = async ({scannedData}) => {
+  //   const id = scannedData
+  //   console.log(id)
+    
+  //   const studentPattern = /^2/i;
+  //   const staffPattern = /^c/i;
+
+  //   if (studentPattern.test(id)) {
+  //    await validateStudent(id)
+  //       .then((valid) => {
+  //         console.log("Validation success:", valid);
+  //         if (valid) {
+  //           navigation.navigate('login');
+  //         } else {
+  //           navigation.navigate('register');
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error in StudentAccess:", error);
+  //       });
+  //   } else if (staffPattern.test(scannedData)) {
+  //     // Handle staff case if needed
+  //   } else {
+  //     console.log("ID format not recognized");
+  //     // Handle unrecognized ID format
+  //   }
+  // };
+
+  const studentOrStaff = async (scannedData) => {
+    const id = scannedData;
+    console.log(id);
+    
+    const studentPattern = /^2/i;
+    const staffPattern = /^c/i;
+  
+    if (studentPattern.test(id)) {
+      try {
+        const valid = await validateStudent(id);
+        console.log("Validation success:", valid);
+        if (valid) {
+          navigation.navigate('login');
+        } else {
+          navigation.navigate('register');
+        }
+      } catch (error) {
+        console.error("Error in StudentAccess:", error);
+      }
+    } else if (staffPattern.test(id)) {
+      // Handle staff case if needed
+    } else {
+      console.log("ID format not recognized");
+      // Handle unrecognized ID format
+    }
+  };
+  
+  
 
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
@@ -64,9 +125,10 @@ export default function ScanScreen() {
       {scannedData && (
         <View style={styles.scannedDataContainer}>
           <Text style={styles.scannedDataText}>ID: {scannedData}</Text>
-          <TouchableOpacity style={styles.actionButton} onPress={() => { navigation.navigate("register")}}>
-            <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
+          <TouchableOpacity style={styles.actionButton} onPress={() => studentOrStaff(scannedData)}>
+          <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
           </TouchableOpacity>
+
         </View>
       )}
     </View>
