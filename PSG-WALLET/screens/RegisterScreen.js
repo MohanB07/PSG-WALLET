@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import * as Font from 'expo-font';
 import { useEffect } from 'react';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 export default function RegisterScreen() {
@@ -16,10 +17,20 @@ export default function RegisterScreen() {
       }, []);
     return (
     <View style={styles.container}>
-    <Text style={styles.head}>Hello {roll}!</Text>
-    <Text style={styles.text}>Looks like you are new here !  {'\n'} Let's get you set up</Text>
-    <Text style={styles.mid}>We have sent an authentication mail to you ! {'\n'} Please verify from your official email id</Text>
-        
+        <View style={styles.insideContainer} >
+            <Text style={styles.head}>Hello {roll}!</Text>
+        </View>
+        <View style={styles.insideContainer}>
+            <Text style={styles.text}>Looks like you are new here !  {'\n'} Let's get you set up</Text>
+        </View>
+        <View style={styles.insideContainerMid}>
+            <Text style={styles.mid}>We have sent an authentication mail to you ! {'\n'} Please verify from your official email id</Text>
+        </View>
+        <View style={styles.onecontainer}>
+            <View style={styles.twoContainer}>
+                <MaterialIcons name="mark-email-read" size={60} color="white" />
+            </View>
+        </View>
     
     </View>
 
@@ -28,16 +39,41 @@ export default function RegisterScreen() {
 }
 
 const styles = StyleSheet.create({
+    onecontainer: {
+        
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:20
+      },
+      twoContainer: {
+        alignItems: 'center', // Center the icon vertically
+        backgroundColor: 'transparent', // Make the container transparent
+      },
     container: {
         flex: 1,
-        
+        // borderWidth:2,
+        // borderColor:'white',
         backgroundColor: "#2b4bab",
-        justifyContent: "center",
+        // justifyContent: "center",
         padding: 15
        
     },
+    
+    insideContainer:{
+        // borderWidth:2,
+        // borderColor:'black',
+    },
+    insideContainerMid:{
+        // borderWidth:2,
+        // borderColor:'black',
+        marginTop:'50%'
+    },
     mid:{
-        textAlign:"center"
+       
+        textAlign:"center",
+        color:"white",
+        fontFamily: 'Poppins-Light',
+        fontSize:15
     },
     head: {
         
@@ -54,13 +90,13 @@ const styles = StyleSheet.create({
     },
     text:{
         
-        backgroundColor:'white',
-        justifyContent: 'flex-start', 
+        
         //borderWidth: 2,
         //fontWeight:'bold',
         padding: 15,
         borderRadius: 10,
-        fontFamily: 'Poppins-Bold'
+        fontFamily: 'Poppins-Bold',
+        color:"white"
     
     }
 })
