@@ -1,46 +1,60 @@
-import React, { useEffect } from 'react';
-import { View, Image, StyleSheet, Animated, Easing } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Animated, Easing, Image, StyleSheet, Text, View } from 'react-native';
+
+const TypingText = ({ text }) => {
+  const [displayText, setDisplayText] = useState('');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextChar = text[displayText.length];
+      if (nextChar) {
+        setDisplayText((prevText) => prevText + nextChar);
+      } else {
+        clearInterval(interval);
+      }
+    }, 100); // Adjust typing speed as needed
+
+    return () => clearInterval(interval);
+  }, [displayText, text]);
+
+  return <Text style={styles.text}>{displayText}</Text>;
+};
 
 const SplashScreen = ({ navigation }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      // Navigate to the login page after the animation completes
-      navigation.replace('login');
-    }, 2000); // Adjust the duration of the animation as needed
-
-    return () => clearTimeout(timer);
-  }, [navigation]);
-
-  const spinValue = new Animated.Value(0);
+  const zoomValue = new Animated.Value(1);
 
   useEffect(() => {
     Animated.loop(
-      Animated.timing(
-        spinValue,
-        {
-          toValue: 1,
-          duration: 2000,
+      Animated.sequence([
+        Animated.timing(zoomValue, {
+          toValue: 1.2,
+          duration: 1000,
           easing: Easing.linear,
           useNativeDriver: true,
-        }
-      )
+        }),
+        Animated.timing(zoomValue, {
+          toValue: 1,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ])
     ).start();
-  }, [spinValue]);
 
-  const spin = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
-  });
+    // Navigate to the next screen after 2 seconds
+    const timer = setTimeout(() => {
+      navigation.replace('Scan');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [navigation, zoomValue]);
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{ transform: [{ rotate: spin }] }}>
-        {/* <Text style={styles.logo}>Your Logo</Text> */}
-        <Image
-        source={require('../assets/PSG_logo.png')} // Adjust the path to your image file
-        style={styles.logo}
-      />
+      <Animated.View style={{ transform: [{ scale: zoomValue }] }}>
+        <Image source={require('../assets/icon-wallet.png')} style={styles.logo} />
       </Animated.View>
+      <TypingText text="PSG WALLET" />
     </View>
   );
 };
@@ -50,15 +64,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#2b4bab",
+    backgroundColor: '#2b4bab',
   },
   logo: {
-    height:150,
-    width:110,
+    height: 150,
+    width: 110,
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginTop: 20,
+    textAlign: 'center',
   },
 });
 
 export default SplashScreen;
-
-
-

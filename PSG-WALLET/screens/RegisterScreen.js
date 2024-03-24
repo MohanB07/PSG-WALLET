@@ -1,11 +1,14 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import * as Font from 'expo-font';
-import { useEffect } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import * as Font from 'expo-font';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 
 export default function RegisterScreen() {
+
+    const navigation = useNavigation();
+
     var roll = "23MX103"
     useEffect(() => {
         // Load Poppins Light font
@@ -30,6 +33,12 @@ export default function RegisterScreen() {
             <View style={styles.twoContainer}>
                 <MaterialIcons name="mark-email-read" size={60} color="white" />
             </View>
+        </View>
+        <View style={styles.scannedDataContainer}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('login')}>
+          <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
+          </TouchableOpacity>
+
         </View>
     
     </View>
@@ -98,5 +107,17 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Bold',
         color:"white"
     
-    }
+    },
+    buttonText: {
+        fontSize: 18,
+        fontFamily: 'Poppins-Bold',
+        color: "#424874",
+        textAlign: "center",
+      }, actionButton: {
+        backgroundColor: "#DCD6F7",
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 15,
+        marginLeft: 10,
+      }
 })

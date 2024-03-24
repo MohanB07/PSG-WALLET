@@ -1,12 +1,13 @@
-import React from 'react'
-import { StyleSheet, Text, View, TextInput,TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 
 
 export default function LoginScreen() {
+
+  const navigation = useNavigation();
 
   const [name, setName] = useState('');
   const [password1, setPassword1] = useState('');
@@ -55,7 +56,7 @@ export default function LoginScreen() {
           placeholder="Enter your password"
           secureTextEntry={true}
         />
-        <TouchableOpacity  style={styles.button}>
+        <TouchableOpacity  style={styles.button} onPress={navigation.navigate('home')}>
                 <Text style={styles.buttonText}>Press Me</Text>
         </TouchableOpacity>
          
