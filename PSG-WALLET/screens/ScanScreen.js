@@ -3,7 +3,7 @@ import { Camera } from 'expo-camera';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import { useGlobalContext } from '../context/globalContext';
 
 
@@ -25,7 +25,7 @@ export default function ScanScreen() {
     Font.loadAsync({
       'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
       'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-      // Add more fonts as needed
+      
     });
 
   }, []);
