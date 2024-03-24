@@ -12,12 +12,12 @@ export const GlobalProvider = ({ children }) => {
 
   const validateStudent = async (id) => {
     try {
+      // console.log(id)
       const response = await axios.get(`${BASE_URL}validateStudent`, {
-        params: {
-          id: id,
-        },
+        params: { id: id }
       });
-      console.log(response.data.success);
+      console.log(response.data.success)
+      // console.log(response.data.success);
       if (response.data.success) {
         return true;
       } else {

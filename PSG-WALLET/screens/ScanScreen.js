@@ -88,7 +88,7 @@ export default function ScanScreen() {
         console.error("Error in StudentAccess:", error);
       }
     } else if (staffPattern.test(id)) {
-      // Handle staff case if needed
+      // Handle staff case
     } else {
       console.log("ID format not recognized");
       // Handle unrecognized ID format
