@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 export default function AccountScreen() {
 
@@ -10,9 +10,9 @@ export default function AccountScreen() {
     <View>
       <Text> AccountScreen </Text>
 
-      <TouclableOpacity  onPress={navigation.navigate('')}>
+      {/* <TouchableOpacity  onPress={ () => navigation.navigate('account')}>
         <Text> Next </Text>
-      </TouclableOpacity>
+      </TouchableOpacity> */}
 
 
     </View>

@@ -16,13 +16,13 @@ export default function App() {
   return (
     <GlobalProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='animate'>
-          <Stack.Screen name="animate" component={Animate} options={{ headerShown: false}} />
+        <Stack.Navigator initialRouteName='Animate'>
+          <Stack.Screen name="Animate" component={Animate} options={{ headerShown: false}} />
           <Stack.Screen name="Scan" component={ScanScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="login" component={LoginScreen} options={{headerShown: false}} />
-          <Stack.Screen name="register" component={RegisterScreen} options={{headerShown: false}} />
-          <Stack.Screen name="home" component={HomeScreen} options={{headerShown: false}} />
-          <Stack.Screen name="account" component={AccountScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Account" component={AccountScreen} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalProvider>

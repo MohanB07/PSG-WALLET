@@ -2,7 +2,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 export default function RegisterScreen() {
@@ -34,22 +35,19 @@ export default function RegisterScreen() {
                 <MaterialIcons name="mark-email-read" size={60} color="white" />
             </View>
         </View>
-        <View style={styles.scannedDataContainer}>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('login')}>
+        <View>
+          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Login')}>
           <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
           </TouchableOpacity>
 
         </View>
     
     </View>
-
-     
     )
 }
 
 const styles = StyleSheet.create({
     onecontainer: {
-        
         justifyContent: 'center',
         alignItems: 'center',
         marginTop:20
@@ -98,7 +96,6 @@ const styles = StyleSheet.create({
 
     },
     text:{
-        
         
         //borderWidth: 2,
         //fontWeight:'bold',

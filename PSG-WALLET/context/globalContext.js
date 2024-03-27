@@ -3,7 +3,7 @@
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
 
-const BASE_URL = "http://192.168.129.81:5000/PSG-WALLET/";
+const BASE_URL = "http://192.168.1.127:5000/PSG-WALLET/";
 
 const GlobalContext = createContext();
 
@@ -12,7 +12,7 @@ export const GlobalProvider = ({ children }) => {
 
   const validateStudent = async (id) => {
     try {
-      // console.log(id)
+      console.log(id)
       const response = await axios.get(`${BASE_URL}validateStudent`, {
         params: { id: id }
       });
@@ -23,6 +23,7 @@ export const GlobalProvider = ({ children }) => {
       } else {
         return false;
       }
+
     } catch (error) {
       console.error('Network Error:', error);
       setError('There was a network error. Please try again later.');

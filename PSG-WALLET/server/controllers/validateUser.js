@@ -3,8 +3,9 @@ const User = require('../models/userSchema')
 exports.validateStudent = async (req,res) => {
     try {
         const { id } = req.query;
+        console.log(id);
 
-        const student = await User.findOne({id});
+        const student = await User.findOne({id : id});
 
         if (student) {
             res.json({ success: true });

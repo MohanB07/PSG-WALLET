@@ -3,15 +3,13 @@ import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-
-
 export default function LoginScreen() {
 
   const navigation = useNavigation();
 
-  const [name, setName] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
+  const [name, setName] = useState(null);
+  const [password1, setPassword1] = useState(null);
+  const [password2, setPassword2] = useState(null);
 
     var roll = "23MX103"
     useEffect(() => {
@@ -22,6 +20,9 @@ export default function LoginScreen() {
           // Add more fonts as needed
         });
       }, []);
+
+      
+
     return (
     <View style={styles.container}>
         <View style={styles.insideContainer} >
@@ -56,15 +57,11 @@ export default function LoginScreen() {
           placeholder="Enter your password"
           secureTextEntry={true}
         />
-        <TouchableOpacity  style={styles.button} onPress={navigation.navigate('home')}>
+        <TouchableOpacity  style={styles.button} onPress={() => navigation.navigate('Home')}>
                 <Text style={styles.buttonText}>Press Me</Text>
         </TouchableOpacity>
-         
       </View>
-    
     </View>
-
-     
     )
 }
 

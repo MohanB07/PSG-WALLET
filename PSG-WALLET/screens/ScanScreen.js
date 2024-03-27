@@ -3,7 +3,7 @@ import { Camera } from 'expo-camera';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useGlobalContext } from '../context/globalContext';
 
 
@@ -70,7 +70,7 @@ export default function ScanScreen() {
 
   const studentOrStaff = async (scannedData) => {
     const id = scannedData;
-    console.log(id);
+    // console.log(id);
     
     const studentPattern = /^2/i;
     const staffPattern = /^c/i;
@@ -80,9 +80,9 @@ export default function ScanScreen() {
         const valid = await validateStudent(id);
         console.log("Validation success:", valid);
         if (valid) {
-          navigation.navigate('login');
+          navigation.navigate('Login');
         } else {
-          navigation.navigate('register');
+          navigation.navigate('Register');
         }
       } catch (error) {
         console.error("Error in StudentAccess:", error);

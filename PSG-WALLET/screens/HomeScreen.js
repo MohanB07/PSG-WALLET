@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
 
@@ -10,13 +10,26 @@ export default function HomeScreen() {
     <View>
       <Text>homeScreen</Text>
 
-      <TouclableOpacity  onPress={navigation.navigate('')}>
-        <Text> Next </Text>
-      </TouclableOpacity>
+      <TouchableOpacity  style={styles.button} onPress={() => navigation.navigate('Account')}>
+                <Text style={styles.buttonText}>Press Me</Text>
+      </TouchableOpacity>
 
 
     </View>
-
-   
   )
 }
+
+
+const styles = StyleSheet.create({
+    button: {
+      backgroundColor: 'white',
+      padding: 10,
+      borderRadius: 5,
+    },
+    buttonText: {
+      textAlign:'center',
+      color: '#2b4bab',
+      fontWeight: 'bold',
+      fontSize: 16,
+    },
+})
