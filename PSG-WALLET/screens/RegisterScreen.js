@@ -1,16 +1,20 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useGlobalContext } from '../context/globalContext';
 
 
 export default function RegisterScreen() {
 
     const navigation = useNavigation();
+    const route = useRoute();
+    const {id} = route.params;
 
-    var roll = "23MX103"
+    const {sendEmail, error} = useGlobalContext();
+
     useEffect(() => {
         // Load Poppins Light font
         Font.loadAsync({
@@ -19,10 +23,23 @@ export default function RegisterScreen() {
           // Add more fonts as needed
         });
       }, []);
+
+
+      const email = async (id) => {
+        try {
+            // console.log("id from mail func", id);
+            await sendEmail(id);
+        } catch (error) {
+            console.log("error in sending mail");
+        }
+      }
+
+
+
     return (
     <View style={styles.container}>
         <View style={styles.insideContainer} >
-            <Text style={styles.head}>Hello {roll}!</Text>
+            <Text style={styles.head}>Hello {id}!</Text>
         </View>
         <View style={styles.insideContainer}>
             <Text style={styles.text}>Looks like you are new here !  {'\n'} Let's get you set up</Text>
@@ -36,12 +53,11 @@ export default function RegisterScreen() {
             </View>
         </View>
         <View>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => email(id)}>
           <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
           </TouchableOpacity>
 
         </View>
-    
     </View>
     )
 }

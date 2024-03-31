@@ -18,16 +18,20 @@ export default function ScanScreen() {
   const [scannedData, setScannedData] = useState(null);
 
   useEffect(() => {
-    (async () => {
+    const loadFontsAndPermissions = async () => {
+      // Load fonts
+      await Font.loadAsync({
+        'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
+
+      // Request camera permissions
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
-    })();
-    Font.loadAsync({
-      'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
-      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-      
-    });
+    };
 
+    // Call the function to load fonts and request permissions
+    loadFontsAndPermissions();
   }, []);
   
   const handleBarCodeScanned = ({ data }) => {
@@ -39,34 +43,6 @@ export default function ScanScreen() {
     setScanned(false);
     setScannedData(null);
   };
-
-  // const studentOrStaff = async ({scannedData}) => {
-  //   const id = scannedData
-  //   console.log(id)
-    
-  //   const studentPattern = /^2/i;
-  //   const staffPattern = /^c/i;
-
-  //   if (studentPattern.test(id)) {
-  //    await validateStudent(id)
-  //       .then((valid) => {
-  //         console.log("Validation success:", valid);
-  //         if (valid) {
-  //           navigation.navigate('login');
-  //         } else {
-  //           navigation.navigate('register');
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error in StudentAccess:", error);
-  //       });
-  //   } else if (staffPattern.test(scannedData)) {
-  //     // Handle staff case if needed
-  //   } else {
-  //     console.log("ID format not recognized");
-  //     // Handle unrecognized ID format
-  //   }
-  // };
 
   const studentOrStaff = async (scannedData) => {
     const id = scannedData;
@@ -82,7 +58,7 @@ export default function ScanScreen() {
         if (valid) {
           navigation.navigate('Login');
         } else {
-          navigation.navigate('Register');
+          navigation.navigate('Register', {id});
         }
       } catch (error) {
         console.error("Error in StudentAccess:", error);
