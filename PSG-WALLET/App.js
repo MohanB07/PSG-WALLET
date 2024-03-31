@@ -13,6 +13,7 @@ import Animate from './screens/animation';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
     <GlobalProvider>
       <NavigationContainer>

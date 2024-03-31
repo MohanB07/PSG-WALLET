@@ -4,24 +4,26 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function LoginScreen() {
-
   const navigation = useNavigation();
-
   const [name, setName] = useState(null);
   const [password1, setPassword1] = useState(null);
   const [password2, setPassword2] = useState(null);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  
+  useEffect(() => {
+    // Load fonts asynchronously
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+        // Add more fonts as needed
+      });
+      setFontsLoaded(true);
+    };
+    loadFonts();
+  }, []);
 
-    var roll = "23MX103"
-    useEffect(() => {
-        // Load Poppins Light font
-        Font.loadAsync({
-          'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
-          'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-          // Add more fonts as needed
-        });
-      }, []);
-
-      
+  
 
     return (
     <View style={styles.container}>

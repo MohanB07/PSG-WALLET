@@ -36,14 +36,14 @@ exports.sendEmail = async(req,res) => {
 }
 
 exports.approve = async(req,res) => {
-  try {
-      res.json({ success : true});
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
+    try {
+        res.json({ success: true });
+        console.log("works from email");
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 }
-
 
 
 

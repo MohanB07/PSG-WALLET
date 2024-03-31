@@ -1,9 +1,10 @@
 {
   "expo": {
     "name": "PSG-WALLET",
-    "slug": "PSG-WALLET",
+    "slug": "psg-wallet",
     "version": "1.0.0",
     "orientation": "portrait",
+    "scheme": "exp",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -15,13 +16,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mohanb.psgwallet"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.mohanb.psgwallet"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +41,12 @@
         }
       ],
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "85a48522-3f7e-4c22-a8d9-176568350001"
+      }
+    },
+    "owner": "mohanb"
   }
 }

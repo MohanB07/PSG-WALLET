@@ -34,102 +34,111 @@ const sendEmail = async (toEmail, mailOptions) => {
 };
 
 exports.sendEmailsToUsers = async (userEmail) => {
-    try {
-        const customizedMailOptions = {
-            ...mailOptionsTemplate,
-            subject: 'PSG_WALLET Account Approval',
-            text: 'Hello, this is your PSG_WALLET account approval email.',
-            html: `
-            <html>
-            <head>
-              <style>
-                body {
-                  font-family: 'Arial', sans-serif;
-                  background-color: #f5f5f5;
-                  color: #333;
-                  padding: 20px;
-                  margin: 0;
-                }
-                .header {
-                  background-color: #2b4bab; /* Primary color for PSG_WALLET */
-                  color: #fff;
-                  padding: 20px;
-                  text-align: center;
-                }
-                .content {
-                  padding: 40px;
-                  border-radius: 15px;
-                  background-color: #f0f0f0; /* Complementary color */
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                  margin-top: 40px;
-                }
-                .cta-button {
-                  display: inline-block;
-                  padding: 15px 30px;
-                  background-color: #2b4bab; /* Primary color for PSG_WALLET */
-                  color: #fff; /* White text color */
-                  text-decoration: none;
-                  border-radius: 5px;
-                  margin-top: 30px;
-                  transition: background-color 0.3s ease;
-                  font-size: 18px;
-                }
-                .cta-button:hover {
-                  background-color: #1d3e95; /* Darker shade on hover */
-                }
-                .card {
-                  background-color: #fff; /* White background */
-                  padding: 20px;
-                  border-radius: 10px;
-                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                  margin-bottom: 20px;
-                }
-                .banner {
-                  background-color: #2b4bab; /* Primary color for PSG_WALLET */
-                  padding: 40px;
-                  text-align: center;
-                  border-radius: 15px;
-                  margin-top: 40px;
-                }
-                .banner img {
-                  width: 200px;
-                  height: auto;
-                }
-                .info {
-                  text-align: center;
-                  margin-top: 30px;
-                  font-size: 20px;
-                  color: #555; /* Darker complementary color */
-                }
-                .info p {
-                  margin-bottom: 15px;
-                }
-              </style>
-            </head>
-            <body>
-              <div class="header">
-                <h1>Welcome to PSG_WALLET</h1>
+  try {
+      const customizedMailOptions = {
+          ...mailOptionsTemplate,
+          subject: 'PSG_WALLET Account Approval',
+          text: 'Hello, this is your PSG_WALLET account approval email.',
+          html: `
+          <html>
+          <head>
+            <style>
+              body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f5f5f5;
+                color: #333;
+                padding: 20px;
+                margin: 0;
+              }
+              .header {
+                background-color: #2b4bab; /* Primary color for PSG_WALLET */
+                color: #fff;
+                padding: 20px;
+                text-align: center;
+              }
+              .content {
+                padding: 40px;
+                border-radius: 15px;
+                background-color: #f0f0f0; /* Complementary color */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin-top: 40px;
+              }
+              .cta-button {
+                display: inline-block;
+                padding: 15px 30px;
+                background-color: #2b4bab; /* Primary color for PSG_WALLET */
+                color: #fff; /* White text color */
+                text-decoration: none;
+                border-radius: 5px;
+                margin-top: 30px;
+                transition: background-color 0.3s ease;
+                font-size: 18px;
+              }
+              .cta-button:hover {
+                background-color: #1d3e95; /* Darker shade on hover */
+              }
+              .cta-button[disabled] {
+                background-color: #ccc; /* Disabled button color */
+                cursor: not-allowed;
+              }
+              .card {
+                background-color: #fff; /* White background */
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+              }
+              .banner {
+                background-color: #2b4bab; /* Primary color for PSG_WALLET */
+                padding: 40px;
+                text-align: center;
+                border-radius: 15px;
+                margin-top: 40px;
+              }
+              .banner img {
+                width: 200px;
+                height: auto;
+              }
+              .info {
+                text-align: center;
+                margin-top: 30px;
+                font-size: 20px;
+                color: #555; /* Darker complementary color */
+              }
+              .info p {
+                margin-bottom: 15px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <h1>Welcome to PSG_WALLET</h1>
+            </div>
+            <div class="banner">
+              <img src="../assets/icon-wallet.png" alt="PSG_WALLET Logo"> <!-- Replace with your logo -->
+            </div>
+            <div class="content">
+              <div class="info">
+                <p>Hello,</p>
+                <p>Your PSG_WALLET account is ready for approval.</p>
+                <p>If everything looks good, please proceed to approve your account:</p>
               </div>
-              <div class="banner">
-                <img src="../assets/icon-wallet.png" alt="PSG_WALLET Logo"> <!-- Replace with your logo -->
-              </div>
-              <div class="content">
-                <div class="info">
-                  <p>Hello,</p>
-                  <p>Your PSG_WALLET account is ready for approval.</p>
-                  <p>If everything looks good, please proceed to approve your account:</p>
-                </div>
+              <div style="align-items: center;">
+              <form id="approvalForm" action="http://192.168.54.81:5000/PSG-WALLET/approve" method="GET">
                 <div style="text-align: center;">
-                    <a href="http://localhost:5000/approve" class="cta-button">Approve Account</a>
+                  <button type="submit" id="approveButton" class="cta-button" onclick="disableButton()">Approve Account</button>
                 </div>
+              </form>
               </div>
-            </body>
-            </html>
-  `,
+              </div>
+          </body>
+          </html>
+`,
 };
 
 
-            await sendEmail(userEmail, customizedMailOptions);
+    await sendEmail(userEmail, customizedMailOptions);
+
     } catch (error) {
         console.error(error);
     }

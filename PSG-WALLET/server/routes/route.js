@@ -10,6 +10,5 @@ Router.post('/create', createUser)
       .get('/validateStudent', validateStudent)
       .get('/sendEmail', sendEmail)
       .get('/approve', approve)
-      
 
 module.exports = Router
