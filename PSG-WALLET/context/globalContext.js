@@ -1,9 +1,7 @@
-// GlobalContext.js
-
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
 
-const BASE_URL = "http://192.168.1.127:5000/PSG-WALLET/";
+const BASE_URL = "http://192.168.1.4:5000/PSG-WALLET/";
 
 const GlobalContext = createContext();
 
@@ -17,7 +15,7 @@ export const GlobalProvider = ({ children }) => {
         params: { id: id }
       });
       console.log(response.data.success)
-      // console.log(response.data.success);
+
       if (response.data.success) {
         return true;
       } else {
@@ -27,7 +25,6 @@ export const GlobalProvider = ({ children }) => {
     } catch (error) {
       console.error('Network Error:', error);
       setError('There was a network error. Please try again later.');
-      return false;
     }
   };
 
@@ -44,10 +41,33 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  const verifyOTP = async (id, otp) => {
+    try {
+      otpData = {
+        enteredOTP : otp,
+        id : id
+      };
+
+      const response = await axios.post(`${BASE_URL}verifyOtp`, otpData)
+      console.log( "from global context : " + response.data.success)
+
+      if (response.data.success) {
+        return true;
+      } else {
+        return false;
+      }
+
+    } catch (error) {
+      console.error('Network Error:', error);
+      setError('There was a network error. Please try again later.');
+    }
+  }
+
   return (
     <GlobalContext.Provider value={{
         validateStudent,
         sendEmail,
+        verifyOTP,
         error
     }}>
       {children}

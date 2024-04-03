@@ -12,7 +12,7 @@ const TypingText = ({ text }) => {
       } else {
         clearInterval(interval);
       }
-    }, 100); // Adjust typing speed as needed
+    }, 100);
 
     return () => clearInterval(interval);
   }, [displayText, text]);
@@ -41,7 +41,6 @@ const SplashScreen = ({ navigation }) => {
       ])
     ).start();
 
-    // Navigate to the next screen after 2 seconds
     const timer = setTimeout(() => {
       navigation.replace('Scan');
     }, 2000);
@@ -52,7 +51,7 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Animated.View style={{ transform: [{ scale: zoomValue }] }}>
-        <Image source={require('../assets/icon-wallet.png')} style={styles.logo} />
+        <Image source={require('../assets/images/icon-wallet.png')} style={styles.logo} />
       </Animated.View>
       <TypingText text="PSG WALLET" />
     </View>
@@ -69,12 +68,12 @@ const styles = StyleSheet.create({
   logo: {
     height: 150,
     width: 110,
+    marginBottom: 20, // Added margin to separate image and text
   },
   text: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
-    marginTop: 20,
     textAlign: 'center',
   },
 });

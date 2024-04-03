@@ -18,21 +18,25 @@ export default function RegisterScreen() {
     useEffect(() => {
         // Load Poppins Light font
         Font.loadAsync({
-          'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
-          'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+        'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
           // Add more fonts as needed
         });
-      }, []);
+    }, []);
 
 
-      const email = async (id) => {
+    const email = async (id) => {
         try {
             // console.log("id from mail func", id);
             await sendEmail(id);
         } catch (error) {
             console.log("error in sending mail");
         }
-      }
+        }
+
+        const navToOTP = () => {
+            navigation.navigate('Otp', {id});
+        }
 
 
 
@@ -53,9 +57,9 @@ export default function RegisterScreen() {
             </View>
         </View>
         <View>
-          <TouchableOpacity style={styles.actionButton} onPress={() => email(id)}>
-          <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton} onPress={() => {email(id); navToOTP();}}>
+        <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
+        </TouchableOpacity>
 
         </View>
     </View>
@@ -63,44 +67,41 @@ export default function RegisterScreen() {
 }
 
 const styles = StyleSheet.create({
-    onecontainer: {
+        onecontainer: {
         justifyContent: 'center',
         alignItems: 'center',
         marginTop:20
-      },
-      twoContainer: {
-        alignItems: 'center', // Center the icon vertically
-        backgroundColor: 'transparent', // Make the container transparent
-      },
-    container: {
+        },
+        twoContainer: {
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+        },
+        container: {
         flex: 1,
         // borderWidth:2,
         // borderColor:'white',
         backgroundColor: "#2b4bab",
         // justifyContent: "center",
         padding: 15
-       
-    },
+        },
     
-    insideContainer:{
+        insideContainer:{
         // borderWidth:2,
         // borderColor:'black',
-    },
-    insideContainerMid:{
+        },
+        insideContainerMid:{
         // borderWidth:2,
         // borderColor:'black',
         marginTop:'50%'
-    },
-    mid:{
-       
+        },
+        mid:{
         textAlign:"center",
         color:"white",
         fontFamily: 'Poppins-Light',
         fontSize:15
-    },
-    head: {
-        
-        justifyContent: 'flex-start', 
+        },
+        head: {
+        justifyContent: 'flex-start',
         textAlign: 'left',
         paddingTop: 50,
         color:'white',
@@ -110,8 +111,8 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         
 
-    },
-    text:{
+        },
+        text:{
         
         //borderWidth: 2,
         //fontWeight:'bold',
@@ -120,17 +121,20 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Bold',
         color:"white"
     
-    },
-    buttonText: {
+        },
+        buttonText: {
         fontSize: 18,
         fontFamily: 'Poppins-Bold',
         color: "#424874",
         textAlign: "center",
-      }, actionButton: {
+        },
+        actionButton: {
         backgroundColor: "#DCD6F7",
         paddingVertical: 5,
         paddingHorizontal: 10,
         borderRadius: 15,
         marginLeft: 10,
-      }
+        },
+
 })
+
