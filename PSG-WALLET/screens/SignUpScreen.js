@@ -69,7 +69,6 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
 
-  //entire container
   container: {
     flex: 1,
     // borderWidth:2,
@@ -80,7 +79,6 @@ const styles = StyleSheet.create({
    
   },
     
-    //two lines in header
     insideContainer:{
         // borderWidth:2,
         // borderColor:'black',
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
     },
     head: {
         
-        justifyContent: 'flex-start', 
+        justifyContent: 'flex-start',
         textAlign: 'left',
         paddingTop: 50,
         color:'white',

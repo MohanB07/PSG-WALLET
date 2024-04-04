@@ -47,6 +47,12 @@ const verify = async () => {
       try {
         const otp = getOtp();
         console.log(otp)
+        setOtp({ 1: "", 2:"",  3: "", 4: "" });
+
+        firstInput.current.clear();
+        secondInput.current.clear();
+        thirdInput.current.clear();
+        fourthInput.current.clear();
 
         const response  = await verifyOTP(id,otp)
 
@@ -57,19 +63,25 @@ const verify = async () => {
         }else{
           showAlert();
         }
+
       } catch (error) {
         console.log("error in verifying otp")
       }
 }
 
+const mailID = (id) => {
+  const lower = id.toLowerCase();
+  return lower + "@psgtech.ac.in";
+}
 
   return (
     <View style={styles.container}>
       <View style={styles.header} >
-            <Text style={styles.head}>Hello {id}!</Text>
+            <Text style={styles.head}>Hello<Text style={styles.headId}> {id}! </Text> </Text>
       </View>
       <View style={styles.insideContainer}>
-            <Text style={styles.text}> To verify the OTP, {'\n'} {'\n'} please check your official email inbox. </Text>
+            <Text style={styles.text}>To verify the OTP,{'\n'}please check your official email inbox.<Text style={styles.headId}> {mailID(id)} </Text> </Text>
+            
         </View>
         <View style={styles.OtpContainer}>
             <View style={styles.OtpBox}>
@@ -137,7 +149,7 @@ const styles = StyleSheet.create({
     padding: 15
     },
    header: {
-    marginTop: 25,
+    marginTop: 50,
     marginLeft: 10,
    },
    head:{
@@ -146,7 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 35
   },
   text:{
-    fontSize: 15,
+    fontSize: 18,
     padding: 15,
     borderRadius: 10,
     fontFamily: 'Poppins-Bold',
@@ -188,4 +200,7 @@ const styles = StyleSheet.create({
         color: "#424874",
         textAlign: "center",
         },
+        headId:{
+          color: "#FCDC2A",
+      }
 })

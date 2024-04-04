@@ -43,13 +43,13 @@ export default function RegisterScreen() {
     return (
     <View style={styles.container}>
         <View style={styles.insideContainer} >
-            <Text style={styles.head}>Hello {id}!</Text>
+            <Text style={styles.head}>Hello<Text style={styles.headId}> {id}! </Text></Text>
         </View>
         <View style={styles.insideContainer}>
             <Text style={styles.text}>Looks like you are new here !  {'\n'} Let's get you set up</Text>
         </View>
         <View style={styles.insideContainerMid}>
-            <Text style={styles.mid}>We have sent an authentication mail to you ! {'\n'} Please verify from your official email id</Text>
+            <Text style={styles.mid}> Tap the button to send the verification email to your official email address. </Text>
         </View>
         <View style={styles.onecontainer}>
             <View style={styles.twoContainer}>
@@ -58,7 +58,7 @@ export default function RegisterScreen() {
         </View>
         <View>
         <TouchableOpacity style={styles.actionButton} onPress={() => {email(id); navToOTP();}}>
-        <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
+        <Text style={styles.buttonText}> Send Email  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
         </TouchableOpacity>
 
         </View>
@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
         insideContainerMid:{
         // borderWidth:2,
         // borderColor:'black',
-        marginTop:'50%'
+        marginTop:'10%'
         },
         mid:{
         textAlign:"center",
         color:"white",
         fontFamily: 'Poppins-Light',
-        fontSize:15
+        fontSize: 20
         },
         head: {
         justifyContent: 'flex-start',
@@ -113,17 +113,14 @@ const styles = StyleSheet.create({
 
         },
         text:{
-        
-        //borderWidth: 2,
-        //fontWeight:'bold',
         padding: 15,
         borderRadius: 10,
         fontFamily: 'Poppins-Bold',
-        color:"white"
-    
+        color:"white",
+        fontSize: 20
         },
         buttonText: {
-        fontSize: 18,
+        fontSize: 20,
         fontFamily: 'Poppins-Bold',
         color: "#424874",
         textAlign: "center",
@@ -134,7 +131,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 15,
         marginLeft: 10,
+        marginTop: '80%',
         },
-
+        headId:{
+            color: "#FCDC2A",
+        }
 })
 

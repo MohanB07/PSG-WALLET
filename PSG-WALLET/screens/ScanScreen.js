@@ -1,7 +1,7 @@
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Camera } from 'expo-camera';
 import * as Font from 'expo-font';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useGlobalContext } from '../context/globalContext';
@@ -17,22 +17,26 @@ export default function ScanScreen() {
   const [scanned, setScanned] = useState(false);
   const [scannedData, setScannedData] = useState(null);
 
-  useEffect(() => {
-    const loadFontsAndPermissions = async () => {
-      // Load fonts
-      await Font.loadAsync({
-        'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
-        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-      });
 
-      // Request camera permissions
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-    };
+  
+    useFocusEffect(
+      React.useCallback(() => {
+        const loadFontsAndPermissions = async () => {
+          await Font.loadAsync({
+            'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
+            'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+          });
+  
+          const { status } = await Camera.requestCameraPermissionsAsync();
+          setHasPermission(status === 'granted');
+          console.log("Camera permissions:", status === 'granted');
+        };
+  
+        loadFontsAndPermissions();
+      }, [])
+    );
 
-    // Call the function to load fonts and request permissions
-    loadFontsAndPermissions();
-  }, []);
+
   
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
@@ -44,10 +48,12 @@ export default function ScanScreen() {
     setScannedData(null);
   };
 
+
+
   const studentOrStaff = async (scannedData) => {
     const id = scannedData;
     // console.log(id);
-    
+    // setScannedData(null);
     const studentPattern = /^2/i;
     const staffPattern = /^c/i;
   
@@ -100,7 +106,7 @@ export default function ScanScreen() {
       </View>
       {scannedData && (
         <View style={styles.scannedDataContainer}>
-          <Text style={styles.scannedDataText}>ID: {scannedData}</Text>
+          <Text style={styles.scannedDataText}>ID: <Text style={styles.headId}> {scannedData} </Text> </Text>
           <TouchableOpacity style={styles.actionButton} onPress={() => studentOrStaff(scannedData)}>
           <Text style={styles.buttonText}>Continue  <Icon name="keyboard-arrow-right" size={20}  style={styles.IconStyle} /></Text>
           </TouchableOpacity>
@@ -191,4 +197,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginLeft: 10,
   },
+  headId:{
+    color: "#FCDC2A",
+}
 });
