@@ -1,8 +1,8 @@
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
@@ -53,9 +53,9 @@ export default function AccountScreen() {
           <View style={styles.row}>
             <Text style={[styles.cell,styles.col1,styles.header]}>Enter Amount</Text>
             <TextInput
-                keyboardType="numeric" 
+                keyboardType="number-pad"
                 style={styles.input}
-                value={amount}
+                value={amount.toString()}
                 onChangeText={setAmount}
                 placeholder="Enter Amount"
                 

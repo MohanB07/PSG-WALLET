@@ -81,7 +81,6 @@ const mailID = (id) => {
       </View>
       <View style={styles.insideContainer}>
             <Text style={styles.text}>To verify the OTP,{'\n'}please check your official email inbox.<Text style={styles.headId}> {mailID(id)} </Text> </Text>
-            
         </View>
         <View style={styles.OtpContainer}>
             <View style={styles.OtpBox}>

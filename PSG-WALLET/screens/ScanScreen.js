@@ -2,7 +2,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Camera } from 'expo-camera';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useGlobalContext } from '../context/globalContext';
 
@@ -48,6 +48,15 @@ export default function ScanScreen() {
     setScannedData(null);
   };
 
+  const showAlert = () => {
+    Alert.alert(
+      'Wrong ID',
+      'Please scan the vaid ID.',
+      [{ text: 'OK', onPress: () => navigation.navigate('Scan') }],
+      { cancelable: false }
+    );
+  };
+
 
 
   const studentOrStaff = async (scannedData) => {
@@ -56,13 +65,19 @@ export default function ScanScreen() {
     // setScannedData(null);
     const studentPattern = /^2/i;
     const staffPattern = /^c/i;
+
+    const condition = id.length > 7 && !studentPattern.test(inputString) && !staffPattern.test(inputString);
+
+    if(condition){
+     
+    }
   
     if (studentPattern.test(id)) {
       try {
         const valid = await validateStudent(id);
         console.log("Validation success:", valid);
         if (valid) {
-          navigation.navigate('Login');
+          navigation.navigate('Login', {id});
         } else {
           navigation.navigate('Register', {id});
         }
@@ -73,6 +88,8 @@ export default function ScanScreen() {
       // Handle staff case
     } else {
       console.log("ID format not recognized");
+      showAlert();
+      setScannedData(null);
       // Handle unrecognized ID format
     }
   };
