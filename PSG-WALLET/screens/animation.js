@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   logo: {
     height: 150,
     width: 110,
-    marginBottom: 20, // Added margin to separate image and text
+    marginBottom: 20,
   },
   text: {
     fontSize: 24,

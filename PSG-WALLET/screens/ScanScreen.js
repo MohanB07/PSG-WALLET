@@ -1,43 +1,33 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Camera } from 'expo-camera';
 import * as Font from 'expo-font';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useGlobalContext } from '../context/globalContext';
 
-
 export default function ScanScreen() {
-
-  const {validateStudent, error} = useGlobalContext();
-
+  const { validateStudent, error } = useGlobalContext();
   const navigation = useNavigation();
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [scannedData, setScannedData] = useState(null);
 
+  useEffect(() => {
+    const loadFontsAndPermissions = async () => {
+      await Font.loadAsync({
+        'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
 
-  
-    useFocusEffect(
-      React.useCallback(() => {
-        const loadFontsAndPermissions = async () => {
-          await Font.loadAsync({
-            'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
-            'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-          });
-  
-          const { status } = await Camera.requestCameraPermissionsAsync();
-          setHasPermission(status === 'granted');
-          console.log("Camera permissions:", status === 'granted');
-        };
-  
-        loadFontsAndPermissions();
-      }, [])
-    );
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    };
 
+    loadFontsAndPermissions();
+  }, []);
 
-  
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
     setScannedData(data);
@@ -51,27 +41,23 @@ export default function ScanScreen() {
   const showAlert = () => {
     Alert.alert(
       'Wrong ID',
-      'Please scan the vaid ID.',
+      'Please scan the valid ID.',
       [{ text: 'OK', onPress: () => navigation.navigate('Scan') }],
       { cancelable: false }
     );
   };
 
-
-
   const studentOrStaff = async (scannedData) => {
     const id = scannedData;
-    // console.log(id);
-    // setScannedData(null);
     const studentPattern = /^2/i;
     const staffPattern = /^c/i;
 
-    const condition = id.length > 7 && !studentPattern.test(inputString) && !staffPattern.test(inputString);
+    const condition = id.length > 7 && !studentPattern.test(id) && !staffPattern.test(id);
 
-    if(condition){
-     
+    if(condition) {
+      showAlert();
     }
-  
+
     if (studentPattern.test(id)) {
       try {
         const valid = await validateStudent(id);
@@ -85,16 +71,13 @@ export default function ScanScreen() {
         console.error("Error in StudentAccess:", error);
       }
     } else if (staffPattern.test(id)) {
-      // Handle staff case
+      
     } else {
       console.log("ID format not recognized");
       showAlert();
       setScannedData(null);
-      // Handle unrecognized ID format
     }
   };
-  
-  
 
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
