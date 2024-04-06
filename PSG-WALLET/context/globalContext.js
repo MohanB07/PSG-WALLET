@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
 
-const BASE_URL = "http://192.168.54.81:5000/PSG-WALLET/";
+const BASE_URL = "http://192.168.43.160:5000/PSG-WALLET/";
 
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
+  //student or not
   const validateStudent = async (id) => {
     try {
       console.log(id)
@@ -28,9 +29,9 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  //respond to action send email
   const sendEmail = async (id) => {
     try {
-      // console.log("id from axios func", id);
       await axios.get(`${BASE_URL}sendEmail`, {
         params: { id: id }
       });
@@ -41,6 +42,7 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  //handling otp response
   const verifyOTP = async (id, otp) => {
     try {
       otpData = {
@@ -63,11 +65,37 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  const createUser = async (id, name, password) => {
+    try {
+
+      userData = {
+        id : id,
+        password : password,
+        name : name
+      };
+
+      const response = await axios.post(`${BASE_URL}create`, userData)
+
+      if (response.data.success) {
+        return true;
+      }
+      else{
+        return false;
+      }
+
+
+    } catch (error) {
+      console.error('Network Error:', error);
+      setError('There was a network error. Please try again later.');
+    }
+  }
+
   return (
     <GlobalContext.Provider value={{
         validateStudent,
         sendEmail,
         verifyOTP,
+        createUser,
         error
     }}>
       {children}

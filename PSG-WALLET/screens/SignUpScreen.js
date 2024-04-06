@@ -1,14 +1,22 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useGlobalContext } from '../context/globalContext';
+
 
 export default function LoginScreen() {
-  const navigation = useNavigation();
+  
   const [name, setName] = useState(null);
   const [password1, setPassword1] = useState(null);
   const [password2, setPassword2] = useState(null);
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const {createUser, error} = useGlobalContext();
+
+  const navigation = useNavigation();
+  const route = useRoute();
+  const {id} = route.params;
   
   useEffect(() => {
     // Load fonts asynchronously
@@ -23,7 +31,53 @@ export default function LoginScreen() {
     loadFonts();
   }, []);
 
+
+  const showAlert = (Type, Message) => {
+    Alert.alert(
+      Type,
+      Message,
+      [{ text: 'OK', onPress: () => navigation.navigate('SignUp', {id}) }],
+      { cancelable: false }
+    );
+  };
+
+  const validation = (name, password1, password2) => {
+    if (!name) {
+      showAlert("Incomplete", "Name field is required");
+      return;
+    }
+    if (!password1) {
+      showAlert("Incomplete", "Password is required");
+      return;
+    }
+    if (!password2) {
+      showAlert("Incomplete", "Confirm password is required");
+      return;
+    }
+    if (password1 !== password2) {
+      showAlert("Mismatch", "Passwords do not match");
+      return;
+    }
   
+    saveUser(name, password1);
+  };
+
+
+  const saveUser = async (name,password1) => {
+        try {
+
+          const user  = await createUser(id,name,password1)
+
+          if (user) {
+            navigation.navigate("Home");
+          }
+          else {
+            showAlert("failed", "user creation failed");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+  }
 
     return (
     <View style={styles.container}>
@@ -40,14 +94,18 @@ export default function LoginScreen() {
         <TextInput
           style={styles.input}
           defaultValue={name}
-          onChangeText={setName}
+          onChangeText={ (data) => {
+            setName(data);
+          }}
           placeholder="Enter your name"
         />
         <Text style={styles.label}>Set your password for canteen usage</Text>
         <TextInput
           style={styles.input}
           value={password1}
-          onChangeText={setPassword1}
+          onChangeText={ (data) => {
+            setPassword1(data);
+          }}
           placeholder="Password"
           secureTextEntry={true}
         />
@@ -55,11 +113,13 @@ export default function LoginScreen() {
         <TextInput
           style={styles.input}
           value={password2}
-          onChangeText={setPassword2}
+          onChangeText={ (data) => {
+            setPassword2(data);
+          }}
           placeholder="Enter your password"
           secureTextEntry={true}
         />
-        <TouchableOpacity  style={styles.button} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity  style={styles.button} onPress={() => validation(name, password1, password2)}>
                 <Text style={styles.buttonText}>Press Me</Text>
         </TouchableOpacity>
       </View>

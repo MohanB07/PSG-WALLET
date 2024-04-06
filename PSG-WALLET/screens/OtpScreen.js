@@ -59,7 +59,7 @@ const verify = async () => {
         console.log("from otp screen : " + response);
 
         if(response){
-          navigation.navigate('SignUp');
+          navigation.navigate('SignUp', {id});
         }else{
           showAlert();
         }
