@@ -1,8 +1,8 @@
-import { useNavigation } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { BackHandler, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
 
@@ -20,7 +20,21 @@ export default function HomeScreen() {
         });
       }, []);
 
-      
+      useFocusEffect(
+        React.useCallback(() => {
+            const handleBackButtonClick = () => {
+                navigation.navigate('Animate');
+                return true; // Prevent default behavior (exit app)
+            };
+
+            BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+
+            return () => {
+                BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
+            };
+        }, [])
+    );
+
 
     return (
     <View style={styles.container}>
