@@ -28,10 +28,10 @@ exports.login = async (req,res) => {
         const user = await User.findOne({id, password});
 
         if(user){
-            return true;
+            res.json({ success: true });
         }
         else{
-            return false;
+            res.json({ success: false });
         }
     } catch (error) {
         console.error(error)
