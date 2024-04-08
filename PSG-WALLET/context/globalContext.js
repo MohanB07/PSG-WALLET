@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
 
-const BASE_URL = "http://192.168.217.81:5000/PSG-WALLET/";
+const BASE_URL = "http://192.168.217.202:5000/PSG-WALLET/";
 
 const GlobalContext = createContext();
 
@@ -90,6 +90,8 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  
+
 
   return (
     <GlobalContext.Provider value={{
@@ -97,11 +99,14 @@ export const GlobalProvider = ({ children }) => {
         sendEmail,
         verifyOTP,
         createUser,
+        login,
         error
     }}>
       {children}
     </GlobalContext.Provider>
   );
 };
+
+
 
 export const useGlobalContext = () => useContext(GlobalContext);
