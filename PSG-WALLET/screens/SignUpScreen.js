@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useGlobalContext } from '../context/globalContext';
 
 export default function SignUpScreen() {
@@ -114,11 +114,12 @@ export default function SignUpScreen() {
         animationType="fade"
         transparent={true}
         visible={visible}
-        onRequestClose={() => setVisible(false)} // Handle closing modal by pressing back button on Android
+        onRequestClose={() => setVisible(false)}
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Welcome to PSG-WALLET!</Text>
+              <Image source={require('../assets/images/icon-wallet.png')} style={styles.logo} />
+              <Text style={styles.modalText}>Welcome {name}!</Text>
           </View>
         </View>
       </Modal>
@@ -158,6 +159,8 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: 'white',
+    color:'white',
+    fontFamily: "Poppins-Light",
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
@@ -185,14 +188,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    backgroundColor: '#fff',
+    width: '100%',
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center',
   },
   modalText: {
     fontSize: 20,
+    color: "white",
     textAlign: 'center',
     fontFamily: 'Poppins-Bold',
+  },
+  logo: {
+    height: 150,
+    width: 110,
+    marginBottom: 20,
   },
 });

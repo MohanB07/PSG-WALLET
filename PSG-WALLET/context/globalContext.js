@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
 
-const BASE_URL = "http://192.168.43.160:5000/PSG-WALLET/";
+const BASE_URL = "http://192.168.217.81:5000/PSG-WALLET/";
 
 const GlobalContext = createContext();
 

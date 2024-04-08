@@ -1,7 +1,7 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect} from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { BackHandler, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function LoginScreen() {
 
@@ -13,6 +13,21 @@ export default function LoginScreen() {
           // Add more fonts as needed
         });
     }, []);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const handleBackButtonClick = () => {
+                navigation.navigate('Animate');
+                return true; // Prevent default behavior (exit app)
+            };
+
+            BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+
+            return () => {
+                BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
+            };
+        }, [])
+    );
 
     const [password, setPassword] = useState('');
 
