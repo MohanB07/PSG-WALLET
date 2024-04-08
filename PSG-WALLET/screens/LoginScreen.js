@@ -1,7 +1,7 @@
-import { useNavigation, useRoute, useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { BackHandler, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import { Alert, BackHandler, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useGlobalContext } from '../context/globalContext';
 
 
@@ -34,12 +34,12 @@ export default function LoginScreen() {
 
     const showAlert = (Type, Message) => {
         Alert.alert(
-          Type,
-          Message,
-          [{ text: 'OK', onPress: () => navigation.navigate('SignUp', { id }) }],
-          { cancelable: false }
+            Type,
+            Message,
+            [{ text: 'OK', onPress: () => navigation.navigate('Login', {id}) }],
+            { cancelable: false }
         );
-      };
+        };
 
     const [password, setPassword] = useState('');
     const { login, error } = useGlobalContext();
@@ -53,9 +53,11 @@ export default function LoginScreen() {
     };
 
     
-    const validateLogin = async()=>{
+    const validateLogin = async(userId,userPassword)=>{
         try {
-            const valid = await login(id,password);
+            
+            const valid = await login(userId,userPassword);
+
             if(valid){
                 handleLogin();
             }
@@ -82,9 +84,9 @@ export default function LoginScreen() {
                     placeholder="Password"
                     secureTextEntry={true}
                     value={password}
-                    onChangeText={data => setPassword(data)}
+                    onChangeText={(data) => setPassword(data)}
                 />
-            <TouchableOpacity style={styles.actionButton} onPress={()=> validateLogin()}>
+            <TouchableOpacity style={styles.actionButton} onPress={()=> validateLogin(id,password)}>
                 <Text style={styles.buttonText}> Login </Text>
             </TouchableOpacity>
             </View>

@@ -23,8 +23,8 @@ exports.createUser = async (req,res) => {
 
 exports.login = async (req,res) => {
     try {
-        const {id,password} = req.body;
-        console.log(id+password);
+        const {id,password} = req.query;
+        
         const user = await User.findOne({id, password});
 
         if(user){
