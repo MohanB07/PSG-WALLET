@@ -1,88 +1,80 @@
 import { FontAwesome } from '@expo/vector-icons';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { BackHandler, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BackHandler, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
-
   const navigation = useNavigation();
+  const route = useRoute();
+  const { id } = route.params;
+  const [username, setUsername] = useState(id);
 
-  const [username, setUName] = useState("Aparna R");
+  useEffect(() => {
+    // Load Poppins Light font
+    Font.loadAsync({
+      'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      // Add more fonts as needed
+    });
+  }, []);
 
-   
-    useEffect(() => {
-        // Load Poppins Light font
-        Font.loadAsync({
-          'Poppins-Light': require('../assets/fonts/Poppins-Light.ttf'),
-          'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-          // Add more fonts as needed
-        });
-      }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const handleBackButtonClick = () => {
+        navigation.navigate('Animate');
+        return true; // Prevent default behavior (exit app)
+      };
 
-      useFocusEffect(
-        React.useCallback(() => {
-            const handleBackButtonClick = () => {
-                navigation.navigate('Animate');
-                return true; // Prevent default behavior (exit app)
-            };
+      BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
-            BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+      return () => {
+        BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
+      };
+    }, [])
+  );
 
-            return () => {
-                BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
-            };
-        }, [])
-    );
+  // Custom card component
+  const Card = ({ imageSource, buttonText, onPress }) => (
+    <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
+      <Image source={imageSource} style={styles.cardImage} />
+      <Text style={styles.buttonText}>{buttonText}</Text>
+    </TouchableOpacity>
+  );
 
-
-    return (
+  return (
     <View style={styles.container}>
-        <View style={styles.headcontainer}>
-          <View style={styles.left}>
-            <FontAwesome name="user-circle-o" size={30} color="black" style={styles.logo} />
-            <Text style={styles.userName}>{username}</Text>
-          </View>
-          <TouchableOpacity style={styles.right}>
-            <FontAwesome name="history" size={30} color="black"  />
-            <Text> View history</Text>
-          </TouchableOpacity>
-    </View>
-
-    <View style={styles.formcontainer}>
-        <Text style={styles.head}>Choose Account:</Text>
-        <TouchableOpacity  style={styles.button} onPress={() => navigation.navigate('Account')}>
-                <Text style={styles.buttonText}>Canteent Account</Text>
-        </TouchableOpacity>
-       
-        <TouchableOpacity  style={styles.button} onPress={() => navigation.navigate('Account')}>
-                <Text style={styles.buttonText}>Book Depot Account</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity  style={styles.button} onPress={() => navigation.navigate('Account')}>
-                <Text style={styles.buttonText}>Library Account</Text>
+      <View style={styles.headcontainer}>
+        <View style={styles.left}>
+          <FontAwesome name="user-circle-o" size={30} color="black" style={styles.logo} />
+          <Text style={styles.userName}>{username}</Text>
+        </View>
+        <TouchableOpacity style={styles.right}>
+          <FontAwesome style={styles.history} name="history" size={30} color="black" />
+          <Text> View history</Text>
         </TouchableOpacity>
       </View>
-        
+
+      <View style={styles.formcontainer}>
+        <Card
+          imageSource={require('../assets/images/pay.png')} // Change path to your image
+          buttonText="Canteen Account"
+          onPress={() => navigation.navigate('Account', { id })}
+        />
+      </View>
     </View>
-    )
+  );
 }
 
 const styles = StyleSheet.create({
-
-  //entire container
+  // Entire container
   container: {
     flex: 1,
-    // borderWidth:2,
-    // borderColor:'white',
     backgroundColor: "#2b4bab",
-    // justifyContent: "center",
     padding: 15,
-
-   
   },
   headcontainer: {
-    marginTop:25,
+    marginTop: 25,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -91,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderBottomColor: '#cccccc',
-    borderRadius:10,
+    borderRadius: 10,
   },
   left: {
     flexDirection: 'row',
@@ -101,52 +93,43 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     marginRight: 10,
+    marginTop: 10,
   },
   userName: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
+    color: "#000000",
   },
   right: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonText: {
-    fontSize: 16,
-    color: '#007bff',
-  },
-  //content
-  head: {
-        
-    justifyContent: 'flex-start', 
-    textAlign: 'left',
-    paddingTop: 50,
-    color:'white',
-    fontFamily: 'Poppins-Light',
-    fontSize:25,
-    //borderWidth: 2,
-    paddingLeft: 15,
-    
-
-},
-
+  // Content
   formcontainer: {
     flex: 1,
-    padding: 20,
-    
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  button: {
-    margin:20,
+  cardContainer: {
     backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 5,
-    width:250,
-    height:80,
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  cardImage: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    marginBottom: 20,
   },
   buttonText: {
-    textAlign:'center',
+    textAlign: 'center',
     color: '#2b4bab',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 25,
   },
-  
-})
+  history: {
+    marginTop: 15,
+  },
+});

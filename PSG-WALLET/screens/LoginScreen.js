@@ -49,7 +49,7 @@ export default function LoginScreen() {
     const {id} = route.params;
 
     const handleLogin = () => {
-        navigation.navigate('Home');
+        navigation.navigate('Home', {id});
     };
 
     
