@@ -10,6 +10,7 @@ import OtpScreen from './screens/OtpScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ScanScreen from './screens/ScanScreen';
 import SignUpScreen from './screens/SignUpScreen';
+import TransactionsScreen from './screens/TransactionsScreen';
 import Animate from './screens/animation';
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ export default function App() {
           <Stack.Screen name="Account" component={AccountScreen} options={{headerShown: false}} />
           <Stack.Screen name="Otp" component={OtpScreen}  options={{headerShown: false}} />
           <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
+          <Stack.Screen name="Transactions" component={TransactionsScreen} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalProvider>

@@ -2,7 +2,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function AccountScreen() {
@@ -10,8 +10,8 @@ export default function AccountScreen() {
   const route = useRoute();
   const { id } = route.params;
 
-  const [amount, setAmount] = useState(100);
-  const [existingAmount, setExistingAmount] = useState(amount);
+  const [amount, setAmount] = useState("100"); // Set initial value as string
+  const [existingAmount, setExistingAmount] = useState(100);
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString();
 
@@ -25,12 +25,18 @@ export default function AccountScreen() {
   }, []);
 
   const handlePayment = () => {
-    const deepLinkURL = 'exp://paymentCallback';
-    const upiURL = `upi://pay?pa=bm6780735@okhdfcbank&pn=MohanB&am=${amount}&cu=INR&url=${encodeURIComponent(deepLinkURL)}`;
-    Linking.openURL(upiURL).catch(() => {
-      // Handle error
-      console.error('Failed to open UPI payment app.');
-    });
+    const amountNumber = parseFloat(amount);
+    if (isNaN(amountNumber) || amountNumber < 100) {
+      // Show an alert message if the entered value is not a number or less than 100
+      Alert.alert("Invalid Amount", "Please enter a valid amount greater than 100.");
+    } else {
+      const deepLinkURL = 'exp://paymentCallback';
+      const upiURL = `upi://pay?pa=bm6780735@okhdfcbank&pn=MohanB&am=${amount}&cu=INR&url=${encodeURIComponent(deepLinkURL)}`;
+      Linking.openURL(upiURL).catch(() => {
+        // Handle error
+        console.error('Failed to open UPI payment app.');
+      });
+    }
   };
 
   useEffect(() => {
@@ -38,7 +44,7 @@ export default function AccountScreen() {
       const { url } = event;
       if (url.includes('paymentCallback')) {
         navigation.navigate('Account');
-        setExistingAmount(existingAmount + amount);
+        setExistingAmount(existingAmount + parseFloat(amount));
       }
     };
 
@@ -66,9 +72,9 @@ export default function AccountScreen() {
         <View style={styles.row}>
           <Text style={[styles.cell, styles.col1, styles.header]}>Enter Amount</Text>
           <TextInput
-            keyboardType="number-pad"
+            keyboardType="numeric" // Use numeric keyboard
             style={styles.input}
-            value={amount.toString()}
+            value={amount}
             onChangeText={setAmount}
             placeholder="Enter Amount"
           />
@@ -109,10 +115,12 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     marginRight: 10,
+    marginTop: 10,
   },
   userName: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
+    color: "#000000",
   },
   buttonText: {
     fontSize: 16,
@@ -143,7 +151,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: 'bold',
-    backgroundColor: '#f2f2f2',
+    color: "white",
+    borderColor: 'white',
   },
   input: {
     flex: 1,
@@ -151,10 +160,11 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
     borderWidth: 2,
-    borderColor: "white",
     margin: 5,
     borderRadius: 10,
-    color: "white",
+    color: "black",
+    fontWeight: "700",
+    backgroundColor: "white",
   },
   actionButton: {
     alignContent: 'center',

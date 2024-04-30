@@ -49,7 +49,7 @@ export default function HomeScreen() {
           <FontAwesome name="user-circle-o" size={30} color="black" style={styles.logo} />
           <Text style={styles.userName}>{username}</Text>
         </View>
-        <TouchableOpacity style={styles.right}>
+        <TouchableOpacity style={styles.right}  onPress={() => navigation.navigate("Transactions", {id})}>
           <FontAwesome style={styles.history} name="history" size={30} color="black" />
           <Text> View history</Text>
         </TouchableOpacity>
