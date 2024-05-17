@@ -28,7 +28,7 @@ export default function RegisterScreen() {
     useFocusEffect(
         React.useCallback(() => {
             const handleBackButtonClick = () => {
-                navigation.navigate('Animate');
+                navigation.navigate('Animate', {id});
                 return true; // Prevent default behavior (exit app)
             };
 

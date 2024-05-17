@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PSG-WALLET",
-    "slug": "psg-wallet",
+    "name": "MX-Wallet",
+    "slug": "psg-wallet-7lfmp9jaijzqihc4oalp",
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "exp",
@@ -44,7 +44,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "85a48522-3f7e-4c22-a8d9-176568350001"
+        "projectId": "11742fec-84f2-4ccb-8265-13c748f480ac"
       }
     },
     "owner": "mohanb"

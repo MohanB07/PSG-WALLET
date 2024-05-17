@@ -89,7 +89,7 @@ export default function ScanScreen() {
   return (
     <View style={styles.container}>
     <Image source={require('../assets/images/PSG_logo.png')} style={styles.logo} />
-    <Text style={styles.header}>PSG-WALLET</Text>
+    <Text style={styles.header}>MX-WALLET</Text>
     <Text style={styles.scanIdText}>Scan ID</Text>
     <View style={styles.cameraContainer}>
         <Camera

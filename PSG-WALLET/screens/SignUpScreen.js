@@ -60,7 +60,7 @@ export default function SignUpScreen() {
       if (user) {
         setVisible(true);
         setTimeout(() => {
-          navigation.navigate("Home");
+          navigation.navigate("Home", {id});
           setVisible(false);
         }, 2000);
       } else {

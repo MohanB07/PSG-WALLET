@@ -26,12 +26,12 @@ export default function AccountScreen() {
 
   const handlePayment = () => {
     const amountNumber = parseFloat(amount);
-    if (isNaN(amountNumber) || amountNumber < 100) {
-      // Show an alert message if the entered value is not a number or less than 100
+    if (isNaN(amountNumber) || amountNumber < 1) {
+      // Show an alert message if the entered value is not a number or less than 100 bm6780735@okhdfcbank
       Alert.alert("Invalid Amount", "Please enter a valid amount greater than 100.");
     } else {
       const deepLinkURL = 'exp://paymentCallback';
-      const upiURL = `upi://pay?pa=bm6780735@okhdfcbank&pn=MohanB&am=${amount}&cu=INR&url=${encodeURIComponent(deepLinkURL)}`;
+      const upiURL = `upi://pay?mc=&tr=&pa=pazhamudirplus.63330858@hdfcbank&pn=Cheran Fresh&am=${amount}&cu=INR&url=${encodeURIComponent(deepLinkURL)}`;
       Linking.openURL(upiURL).catch(() => {
         // Handle error
         console.error('Failed to open UPI payment app.');
